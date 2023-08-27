@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors')
-const rudderEvent = require('./integration/rudderstack')
-
+import express from 'express';
+import cors from 'cors';
+import chatwootRouter from './routes/chatwoot.js'
+import upmindRouter from './routes/upmind.js'
 //configuring app
 const app = express()
 
@@ -15,21 +15,9 @@ app.use(cors({
   origin: '*'
 }))
 
-
-app.post('/viewpage', (req, res) => {
-  console.log(req.body)
-  rudderEvent.page({
-    userId: "1hKOmRA4GRlm",
-    category: "Food",
-    name: "working with chatwooks",
-    properties: {
-      url: "https://example.com",
-      title: "Pizza",
-      referrer: "https://google.com",
-    },
-  })
-  res.json({ message: "Success" })
-})
+// //routes
+app.use('/api/chatwootRoute', chatwootRouter);
+// // app.use('/api/upmindRoute', upmindRouter);
 
 
 
