@@ -1,18 +1,15 @@
 import rudderEvent from '../integration/rudderstack.js'
 export const converstationCreated = async (req, res, next) => {
-  console.log(req.body)
   try {
-    rudderEvent.page({
+    rudderEvent.track({
       userId: "1hKOmRA4GRlm",
-      category: "Food",
-      name: "working with chatwooks",
+      event: "converstation_created",
       properties: {
-        url: "https://example.com",
-        title: "Pizza",
-        referrer: "https://google.com",
+        revenue: 19.95,
+        shippingMethod: "Premium",
       },
     })
-    res.json({ message: "Success" })
+    res.send();
   }
   catch (error) {
     next(error)
@@ -21,7 +18,15 @@ export const converstationCreated = async (req, res, next) => {
 }
 export const converstationStatusChanged = async (req, res, next) => {
   try {
-
+    rudderEvent.track({
+      userId: "1hKOmRA4GRlm",
+      event: "converstation_status_changed",
+      properties: {
+        revenue: 19.95,
+        shippingMethod: "Premium",
+      },
+    })
+    res.send();
   }
   catch (error) {
     next(error)
@@ -30,7 +35,15 @@ export const converstationStatusChanged = async (req, res, next) => {
 }
 export const webWidgetTriggered = async (req, res, next) => {
   try {
-
+    rudderEvent.track({
+      userId: "1hKOmRA4GRlm",
+      event: "web_widget_triggered",
+      properties: {
+        revenue: 19.95,
+        shippingMethod: "Premium",
+      },
+    })
+    res.send();
   }
   catch (error) {
     next(error)
@@ -39,17 +52,15 @@ export const webWidgetTriggered = async (req, res, next) => {
 }
 export const contactCreated = async (req, res, next) => {
   try {
-    rudderEvent.page({
+    rudderEvent.track({
       userId: "1hKOmRA4GRlm",
-      category: "Food",
-      name: "working with upmind",
+      event: "contact_created",
       properties: {
-        url: "https://example.com",
-        title: "Pizza",
-        referrer: "https://google.com",
+        revenue: 19.95,
+        shippingMethod: "Premium",
       },
     })
-    res.json({ message: "Success" })
+    res.send();
   }
   catch (error) {
     next(error)
@@ -58,7 +69,15 @@ export const contactCreated = async (req, res, next) => {
 }
 export const contactUpdated = async (req, res, next) => {
   try {
-
+    rudderEvent.track({
+      userId: "1hKOmRA4GRlm",
+      event: "contact_updated",
+      properties: {
+        revenue: 19.95,
+        shippingMethod: "Premium",
+      },
+    })
+    res.send();
   }
   catch (error) {
     next(error)
