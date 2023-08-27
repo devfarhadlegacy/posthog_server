@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import chatwootRouter from './routes/chatwoot.js'
-import upmindRouter from './routes/upmind.js'
+import chatwootRouter from './routes/chatwoot/chatwoot.js'
+import upmindRouter from './routes/upmind/upmind.js'
 //configuring app
 const app = express()
 
@@ -16,8 +16,8 @@ app.use(cors({
 }))
 
 // //routes
-app.use('/api/chatwootRoute', chatwootRouter);
-// // app.use('/api/upmindRoute', upmindRouter);
+app.use('/api/chatwoot', chatwootRouter);
+app.use('/api/upmind', upmindRouter);
 
 
 

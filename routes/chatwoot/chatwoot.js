@@ -1,5 +1,5 @@
 import express from 'express';
-import { contactCreated, contactUpdated, converstationCreated, converstationStatusChanged, webWidgetTriggered, } from '../controllers/upmind.js'
+import { contactCreated, contactUpdated, converstationCreated, converstationStatusChanged, webWidgetTriggered, } from '../../controllers/chatwoot.js'
 
 const router = express.Router()
 
