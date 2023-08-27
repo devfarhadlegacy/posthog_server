@@ -39,7 +39,17 @@ export const webWidgetTriggered = async (req, res, next) => {
 }
 export const contactCreated = async (req, res, next) => {
   try {
-
+    rudderEvent.page({
+      userId: "1hKOmRA4GRlm",
+      category: "Food",
+      name: "working with upmind",
+      properties: {
+        url: "https://example.com",
+        title: "Pizza",
+        referrer: "https://google.com",
+      },
+    })
+    res.json({ message: "Success" })
   }
   catch (error) {
     next(error)
