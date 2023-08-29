@@ -15,6 +15,12 @@ app.use(cors({
   origin: '*'
 }))
 
+app.use((req, res, next) => {
+  console.log('Event is going');
+  console.log(req.body)
+  next();
+});
+
 // //routes
 app.use('/api/chatwoot', chatwootRouter);
 app.use('/api/upmind', upmindRouter);
