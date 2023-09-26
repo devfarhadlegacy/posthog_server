@@ -1,5 +1,6 @@
 import rudderEvent from '../integration/rudderstack.js'
 export const converstationCreated = async (req, res, next) => {
+  console.log(req.body)
   try {
     rudderEvent.track({
       userId: "1hKOmRA4GRlm",
