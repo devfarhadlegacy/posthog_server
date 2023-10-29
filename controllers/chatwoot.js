@@ -1,15 +1,14 @@
-import rudderEvent from '../integration/rudderstack.js'
+import posthog from '../integration/postHog.js'
 export const converstationCreated = async (req, res, next) => {
-  console.log(req.body)
   try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "converstation_created",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    })
+    console.log(req.body)
+    // const body={
+    //   userId: "1hKOmRA4GRlm",
+    //   event: "converstation_created",
+    //   properties: {
+    //     ...req.body
+    //   },
+    // }
     res.send();
   }
   catch (error) {
