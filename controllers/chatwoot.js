@@ -9,7 +9,9 @@ export const converstationCreated = async (req, res, next) => {
     //     ...req.body
     //   },
     // }
-    res.send();
+    res.send({
+      "success": true
+    });
   }
   catch (error) {
     next(error)
