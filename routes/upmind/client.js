@@ -6,7 +6,7 @@ import {
   clientLoginEmailUpdated,
   clientNotificationEmailsDeleted,
   clientUpdated
-} from '../../../controllers/upmind.js'
+} from '../../controllers/upmind.js'
 const router = express.Router()
 router.post('/registered', clientRegistered);
 router.post('/loggedin', clientLoggedIn);

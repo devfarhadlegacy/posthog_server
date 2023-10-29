@@ -1,7 +1,7 @@
 import express from 'express';
-import clientRouter from './routes/client.js'
-import contractProductRouter from './routes/contractproduct.js'
-import invoiceRouter from './routes/invoice.js'
+import clientRouter from './client.js'
+import contractProductRouter from './contractproduct.js'
+import invoiceRouter from './invoice.js'
 
 const router = express.Router()
 

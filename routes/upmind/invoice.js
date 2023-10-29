@@ -2,7 +2,7 @@ import express from 'express';
 import {
   invoiceCreated,
   invoicePaymentFailed
-} from '../../../controllers/upmind.js'
+} from '../../controllers/upmind.js'
 
 const router = express.Router()
 

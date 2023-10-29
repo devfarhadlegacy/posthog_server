@@ -10,7 +10,7 @@ import {
   contractProductInvoicingStarted,
   contractProductOwnershipChanged,
   contractProductSetupFailed
-} from '../../../controllers/upmind.js'
+} from '../../controllers/upmind.js'
 const router = express.Router()
 router.post('/activated', contractProductActivated)
 router.post('/created', contractProductCreated)
