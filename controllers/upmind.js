@@ -1,293 +1,125 @@
-import rudderEvent from '../integration/rudderstack.js'
-export const clientRegistered = async (req, res, next) => {
+import {posthog} from '../integration/postHog.js'
+
+
+const captureEvent = async (req, res, next, event, properties) => {
   try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Client Registered",
+    posthog.capture({
+      distinctId: req.body.webhook_event_id,
+      event,
       properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
+        ...properties,
       },
     });
-    res.send();
+    res.send({success: true});
   } catch (error) {
     next(error);
   }
+}
+
+export const clientRegistered = async (req, res, next) => {
+  const event = "Client Registered";
+  const properties = { ...req.body };
+  captureEvent(req, res, next, event, properties);
 }
 
 export const clientLoggedIn = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "client Logged In",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Client Logged In";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const clientDeleted = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "client Deleted",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Client Deleted";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
-// ... Continuing the same pattern for all your routes:
-
 export const clientNotificationEmailsDeleted = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Client Notification Emails Deleted",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Client Notification Emails Deleted";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const clientLoginEmailUpdated = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Client Login Email Updated",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Client Login Email Updated";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const clientUpdated = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Client Updated",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Client Updated";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductActivated = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Activated",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Activated";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductCreated = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Created",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Created";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductPackageChanged = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Package Changed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Package Changed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductPriceChanged = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Price Changed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Price Changed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductOwnershipChanged = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Ownership Changed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Ownership Changed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductRenewOff = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Renew Off",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Renew Off";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductCancelled = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Cancelled",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Cancelled";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductCurrencyChanged = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Currency Changed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Currency Changed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductInvoicingStarted = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Invoicing Started",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Invoicing Started";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const contractProductSetupFailed = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Contract Product Setup Failed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Contract Product Setup Failed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const invoiceCreated = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Invoice Created",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Invoice Created";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
 
 export const invoicePaymentFailed = async (req, res, next) => {
-  try {
-    rudderEvent.track({
-      userId: "1hKOmRA4GRlm",
-      event: "Invoice Payment Failed",
-      properties: {
-        revenue: 19.95,
-        shippingMethod: "Premium",
-      },
-    });
-    res.send();
-  } catch (error) {
-    next(error);
-  }
+  const event = "Invoice Payment Failed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
 }
-
-
-

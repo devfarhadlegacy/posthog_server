@@ -1,7 +1,15 @@
-import posthog from '../integration/postHog.js'
+
 export const converstationCreated = async (req, res, next) => {
+
   try {
-    console.log(req.body)
+    client.capture({
+      distinctId: 'distinct_id_of_the_user',
+      event: 'user signed up"',
+      properties: {
+          login_type: 'email',
+          is_free_trial: true,
+      },
+  })
     // const body={
     //   userId: "1hKOmRA4GRlm",
     //   event: "converstation_created",
@@ -86,8 +94,3 @@ export const contactUpdated = async (req, res, next) => {
   }
 
 }
-
-
-
-
-
