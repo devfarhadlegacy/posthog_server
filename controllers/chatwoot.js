@@ -10,13 +10,6 @@ export const converstationCreated = async (req, res, next) => {
           is_free_trial: true,
       },
   })
-    // const body={
-    //   userId: "1hKOmRA4GRlm",
-    //   event: "converstation_created",
-    //   properties: {
-    //     ...req.body
-    //   },
-    // }
     res.send({
       "success": true
     });
@@ -36,7 +29,9 @@ export const converstationStatusChanged = async (req, res, next) => {
         shippingMethod: "Premium",
       },
     })
-    res.send();
+    res.send({
+      "success": true
+    });
   }
   catch (error) {
     next(error)
@@ -53,7 +48,9 @@ export const webWidgetTriggered = async (req, res, next) => {
         shippingMethod: "Premium",
       },
     })
-    res.send();
+    res.send({
+      "success": true
+    });
   }
   catch (error) {
     next(error)
@@ -70,7 +67,9 @@ export const contactCreated = async (req, res, next) => {
         shippingMethod: "Premium",
       },
     })
-    res.send();
+    res.send({
+      "success": true
+    });
   }
   catch (error) {
     next(error)
@@ -87,7 +86,9 @@ export const contactUpdated = async (req, res, next) => {
         shippingMethod: "Premium",
       },
     })
-    res.send();
+    res.send({
+      "success": true
+    });
   }
   catch (error) {
     next(error)

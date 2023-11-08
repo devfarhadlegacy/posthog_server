@@ -51,6 +51,21 @@ export const clientUpdated = async (req, res, next) => {
   const properties = {...req.body};
   captureEvent(req, res, next, event, properties);
 }
+export const clientWalletBalanceAdjusted = async (req, res, next) => {
+  const event = "Client wallet Balance Adjusted";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+export const clientConsolidationInvoicesDispatched = async (req, res, next) => {
+  const event = "Client consolidation Invoices Dispatched";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+export const clientStaffCreatedVerifiedClient = async (req, res, next) => {
+  const event = "Client staff Created Verified Client";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
 
 export const contractProductActivated = async (req, res, next) => {
   const event = "Contract Product Activated";
@@ -112,6 +127,42 @@ export const contractProductSetupFailed = async (req, res, next) => {
   captureEvent(req, res, next, event, properties);
 }
 
+export const contractProductClosed = async (req, res, next) => {
+  const event = "Contract Product Closed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const contractProductRenewed = async (req, res, next) => {
+  const event = "contract Product Renewed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const contractProductTrialStarted = async (req, res, next) => {
+  const event = "contract Product Trial Started";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const contractProductSuspended = async (req, res, next) => {
+  const event = "Contract Product Suspended";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const contractProductUnsuspended = async (req, res, next) => {
+  const event = "Contract Product Unsuspended";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const contractProductTrialToPaid = async (req, res, next) => {
+  const event = "Contract Product Trial To Paid";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
 export const invoiceCreated = async (req, res, next) => {
   const event = "Invoice Created";
   const properties = {...req.body};
@@ -120,6 +171,40 @@ export const invoiceCreated = async (req, res, next) => {
 
 export const invoicePaymentFailed = async (req, res, next) => {
   const event = "Invoice Payment Failed";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const invoiceCancelled = async (req, res, next) => {
+  const event = "Invoice Cancelled";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const invoicePaidWithNextCard = async (req, res, next) => {
+  const event = "Invoice Paid With Next Card";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const invoicePaid = async (req, res, next) => {
+  const event = "Invoice Paid";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+
+export const invoiceRefunded = async (req, res, next) => {
+  const event = "Invoice Refunded";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+export const invoicePaymentReceived = async (req, res, next) => {
+  const event = "Invoice Payment Received";
+  const properties = {...req.body};
+  captureEvent(req, res, next, event, properties);
+}
+export const invoicePaymentRefunded = async (req, res, next) => {
+  const event = "Invoice Payment Refunded";
   const properties = {...req.body};
   captureEvent(req, res, next, event, properties);
 }
