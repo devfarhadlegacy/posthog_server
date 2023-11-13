@@ -1,210 +1,90 @@
-import {posthog} from '../integration/postHog.js'
+import { posthog } from '../integration/postHog.js'
 
 
-const captureEvent = async (req, res, next, event, properties) => {
+const captureEvent = async (distinctId, res, next, event, properties) => {
   try {
     posthog.capture({
-      distinctId: req.body.webhook_event_id,
+      distinctId,
       event,
       properties: {
         ...properties,
       },
     });
-    res.send({success: true});
+    res.send({ success: true, properties });
   } catch (error) {
     next(error);
   }
 }
 
-export const clientRegistered = async (req, res, next) => {
-  const event = "Client Registered";
-  const properties = { ...req.body };
-  captureEvent(req, res, next, event, properties);
+const processProperties = (properties) => {
+  // Initialize an empty object to store the flattened result
+  var result = {};
+
+  // Define a recursive function to process nested structures
+  function recurse(cur, prop) {
+    // If the current element is not an object, assign it to the result
+    if (Object(cur) !== cur) {
+      result[prop] = cur;
+    }
+    // If the current element is an array, recursively process its elements
+    else if (Array.isArray(cur)) {
+      for (var i = 0, l = cur.length; i < l; i++)
+        recurse(cur[i], prop + "[" + i + "]");
+      // If the array is empty, assign an empty array to the result
+      if (l == 0)
+        result[prop] = [];
+    }
+    // If the current element is an object, recursively process its properties
+    else {
+      var isEmpty = true;
+      for (var p in cur) {
+        isEmpty = false;
+        // Recursively process the nested property
+        recurse(cur[p], prop ? prop + "." + p : p);
+      }
+      // If the object is empty and it's not the root object, assign an empty object to the result
+      if (isEmpty && prop)
+        result[prop] = {};
+    }
+  }
+  recurse(properties, "")
+  return result
 }
 
-export const clientLoggedIn = async (req, res, next) => {
-  const event = "Client Logged In";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
+function processString(inputString) {
+  // Remove the last "_hook" from the string
+  if (inputString.endsWith('_hook')) {
+    inputString = inputString.slice(0, -5);
+  }
+
+  // Replace underscores with spaces
+  inputString = inputString.replace(/_/g, ' ');
+
+  // Capitalize the first character of every word
+  inputString = inputString.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+  return inputString;
 }
 
-export const clientDeleted = async (req, res, next) => {
-  const event = "Client Deleted";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
+function processDistinctId(properties) {
+  if (properties.hook_category === 'invoice')
+    return properties.object.client_id;
+  else if (properties.hook_category === 'client')
+    return properties.object_id;
+  else if (properties.hook_category === 'contracts_product')
+    return properties.contract.client_id;
+  else if (properties.hook_category === 'invoice_payment')
+    return properties.object.client_id;
+
+  return "unknown";
+
 }
 
-export const clientNotificationEmailsDeleted = async (req, res, next) => {
-  const event = "Client Notification Emails Deleted";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
+export const upmindWebhook = async (req, res, next) => {
 
-export const clientLoginEmailUpdated = async (req, res, next) => {
-  const event = "Client Login Email Updated";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
+  const event = processString(req.body.hook_code);
+  const distinctId = processDistinctId(req.body);
+  const result = flattenProperties(req.body, "");
 
-export const clientUpdated = async (req, res, next) => {
-  const event = "Client Updated";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-export const clientWalletBalanceAdjusted = async (req, res, next) => {
-  const event = "Client wallet Balance Adjusted";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-export const clientConsolidationInvoicesDispatched = async (req, res, next) => {
-  const event = "Client consolidation Invoices Dispatched";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-export const clientStaffCreatedVerifiedClient = async (req, res, next) => {
-  const event = "Client staff Created Verified Client";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductActivated = async (req, res, next) => {
-  const event = "Contract Product Activated";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductCreated = async (req, res, next) => {
-  const event = "Contract Product Created";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductPackageChanged = async (req, res, next) => {
-  const event = "Contract Product Package Changed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductPriceChanged = async (req, res, next) => {
-  const event = "Contract Product Price Changed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductOwnershipChanged = async (req, res, next) => {
-  const event = "Contract Product Ownership Changed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductRenewOff = async (req, res, next) => {
-  const event = "Contract Product Renew Off";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductCancelled = async (req, res, next) => {
-  const event = "Contract Product Cancelled";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductCurrencyChanged = async (req, res, next) => {
-  const event = "Contract Product Currency Changed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductInvoicingStarted = async (req, res, next) => {
-  const event = "Contract Product Invoicing Started";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductSetupFailed = async (req, res, next) => {
-  const event = "Contract Product Setup Failed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductClosed = async (req, res, next) => {
-  const event = "Contract Product Closed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductRenewed = async (req, res, next) => {
-  const event = "contract Product Renewed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductTrialStarted = async (req, res, next) => {
-  const event = "contract Product Trial Started";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductSuspended = async (req, res, next) => {
-  const event = "Contract Product Suspended";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductUnsuspended = async (req, res, next) => {
-  const event = "Contract Product Unsuspended";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const contractProductTrialToPaid = async (req, res, next) => {
-  const event = "Contract Product Trial To Paid";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoiceCreated = async (req, res, next) => {
-  const event = "Invoice Created";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoicePaymentFailed = async (req, res, next) => {
-  const event = "Invoice Payment Failed";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoiceCancelled = async (req, res, next) => {
-  const event = "Invoice Cancelled";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoicePaidWithNextCard = async (req, res, next) => {
-  const event = "Invoice Paid With Next Card";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoicePaid = async (req, res, next) => {
-  const event = "Invoice Paid";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-
-export const invoiceRefunded = async (req, res, next) => {
-  const event = "Invoice Refunded";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-export const invoicePaymentReceived = async (req, res, next) => {
-  const event = "Invoice Payment Received";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
-}
-export const invoicePaymentRefunded = async (req, res, next) => {
-  const event = "Invoice Payment Refunded";
-  const properties = {...req.body};
-  captureEvent(req, res, next, event, properties);
+  captureEvent(distinctId, res, next, event, result);
 }

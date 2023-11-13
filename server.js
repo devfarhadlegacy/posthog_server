@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import chatwootRouter from './routes/chatwoot/chatwoot.js'
-import upmindRouter from './routes/upmind/upmind.js'
+import { upmindWebhook } from './controllers/upmind.js';
 //configuring app
 const app = express()
 
@@ -15,15 +15,15 @@ app.use(cors({
   origin: '*'
 }))
 
-app.use((req, res, next) => {
-  console.log('Event is going');
-  console.log(req.body)
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('Event is going');
+//   console.log(req.body)
+//   next();
+// });
 
 // //routes
-app.use('/api/chatwoot', chatwootRouter);
-app.use('/api/upmind', upmindRouter);
+// app.use('/api/chatwoot', chatwootRouter);
+app.post('/api/upmind', upmindWebhook);
 
 
 
