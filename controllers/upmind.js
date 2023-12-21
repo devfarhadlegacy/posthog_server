@@ -131,7 +131,7 @@ export const upmindWebhook = async (req, res, next) => {
   const result = processProperties(req.body, "");
 
   console.log("processed result :", result, "\n");
-  console.log("end result : \n", result, "\n\n\n ///////////////////////////////// \n\n\n");
+  console.log("end result \n\n\n ///////////////////////////////// \n\n\n");
 
   captureEvent(distinctId, res, next, event, result);
 }
