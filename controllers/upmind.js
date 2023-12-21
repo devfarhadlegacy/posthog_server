@@ -16,6 +16,48 @@ const captureEvent = async (distinctId, res, next, event, properties) => {
   }
 }
 
+const acceptedEventPropeties = [
+  'event',
+  'properties',
+  'event_datetime',
+  'hook_code',
+  'object',
+  'public_name',
+  'image_url',
+  'first_name',
+  'last_name',
+  'full_name',
+  'login_email',
+  'login_username',
+  'notification_email',
+  'verified',
+  'avatar_src',
+  'interface_language',
+  'document_language',
+  'created_at',
+  'updated_at',
+  'has_password',
+  'has_login',
+  'is_guest',
+  'default_address',
+  'actor_type',
+  'actor',
+  'brand',
+  'name',
+  'code',
+  'customer_portal_domain',
+  'staff_portal_domain',
+  'company_name',
+  'country',
+  'language',
+  'currency',
+  'tax_type',
+  'timestamp',
+  'team_id',
+  'distinct_id',
+  'elements_chain'
+]
+
 const processProperties = (properties) => {
   // Initialize an empty object to store the flattened result
   var result = {};
@@ -81,13 +123,15 @@ function processDistinctId(properties) {
 }
 
 export const upmindWebhook = async (req, res, next) => {
+  console.log("start result :///////////////////////////////// \n\n\n");
   console.log("json body", req.body);
 
   const event = processString(req.body.hook_code);
   const distinctId = processDistinctId(req.body);
   const result = processProperties(req.body, "");
 
-  console.log("extracted events \n", "event ", event, "\ndistinctID : ", distinctId, "\nresult : ", result);
+  console.log("processed result :", result, "\n");
+  console.log("end result : \n", result, "\n\n\n ///////////////////////////////// \n\n\n");
 
   captureEvent(distinctId, res, next, event, result);
 }
