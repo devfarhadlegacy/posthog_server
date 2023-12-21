@@ -81,11 +81,13 @@ function processDistinctId(properties) {
 }
 
 export const upmindWebhook = async (req, res, next) => {
-  console.log(req.body);
+  console.log("json body", req.body);
 
   const event = processString(req.body.hook_code);
   const distinctId = processDistinctId(req.body);
   const result = processProperties(req.body, "");
+
+  console.log("extracted events \n", "event ", event, "\ndistinctID : ", distinctId, "\nresult : ", result);
 
   captureEvent(distinctId, res, next, event, result);
 }
