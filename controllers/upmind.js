@@ -1,21 +1,6 @@
 import { posthog } from '../integration/postHog.js'
 
 
-const captureEvent = async (distinctId, res, next, event, properties) => {
-  try {
-    posthog.capture({
-      distinctId,
-      event,
-      properties: {
-        ...properties,
-      },
-    });
-    res.send({ success: true, properties });
-  } catch (error) {
-    next(error);
-  }
-}
-
 const allowedProperties = [
   "User",
   "account_name",
@@ -273,17 +258,36 @@ function processDistinctId(properties) {
 
 }
 
+
+const captureEvent = async (distinctId, res, next, event, properties) => {
+  try {
+    posthog.capture({
+      distinctId,
+      event,
+      properties: {
+        ...properties,
+      },
+    });
+    res.send({ success: true, properties });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 export const upmindWebhook = async (req, res, next) => {
-  console.log("start result \n\n\n ///////////////////////////////// \n\n\n");
+  // console.log("start result \n\n\n ///////////////////////////////// \n\n\n");
   const obj = req.body;
   sanitizeObject(obj);
   const event = processEventName(obj.hook_code);
   const distinctId = processDistinctId(obj);
   const result = processProperties(obj);
-  console.log("result", result);
-  console.log("end result \n\n\n ///////////////////////////////// \n\n\n");
+  // console.log("result", result);
+  // console.log("end result \n\n\n ///////////////////////////////// \n\n\n");
 
   captureEvent(distinctId, res, next, event, result);
 
   // res.send({ success: true, properties: result });
 }
+
+
