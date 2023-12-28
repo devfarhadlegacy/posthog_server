@@ -282,12 +282,7 @@ export const upmindWebhook = async (req, res, next) => {
   const event = processEventName(obj.hook_code);
   const distinctId = processDistinctId(obj);
   const result = processProperties(obj);
-  // console.log("result", result);
-  // console.log("end result \n\n\n ///////////////////////////////// \n\n\n");
-
   captureEvent(distinctId, res, next, event, result);
-
-  // res.send({ success: true, properties: result });
 }
 
 

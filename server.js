@@ -24,6 +24,7 @@ app.use(cors({
 // //routes
 // app.use('/api/chatwoot', chatwootRouter);
 app.post('/api/stablepoint', upmindWebhook);
+app.post('/api/whg', upmindWebhook);
 
 
 
